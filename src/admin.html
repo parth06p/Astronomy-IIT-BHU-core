@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Add Blog Post</title>
+    <link rel="stylesheet" href = "./static/styles.css" >
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header" id="header">
+            <button id="add-blog">➕New Post</button>
+            <h2>Welcome to Astronomy Club Blogger</h2>  
+            <hr>
+        </div>
+        <div class="home" id="home">
+        <h4>Active Blogs</h4>
+        </div>
+        <form id = "blog-form">
+            <label for="blog-title"></label>
+            <input type="text" id="blog-title" placeholder="Enter blog title" required>
+            <label for="blog-content"></label>
+            <textarea id = "blog-content" rows = "10" cols = "50" placeholder="Write your paragraph" autocorrect="on" required></textarea>
+            <label for="blog-image" style="font-size: 15px; color:rgb(180, 180, 180)">add image :</label>
+            <input type="file" id="blog-image" accept="image/*" required>
+            <img src="#" id="upl-img">
+            <p id="status"></p>
+
+            <div id="btn-blog">
+                <button type="submit" id="blog-save">Save</button>
+                <button type="cancel" id="blog-cancel">cancel</button>
+            </div>
+        </form>     
+    </div>
+</body>
+<script src = "./static/admin.js" type="module"></script>
+</html>

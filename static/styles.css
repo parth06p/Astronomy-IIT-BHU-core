@@ -1,0 +1,101 @@
+html{
+    background: linear-gradient(45deg, #010027, #000000, #010027);
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+    margin: 0;
+    font-family: "Rubik", "Verdana";
+}
+.header{
+    display: flex;
+    flex-direction: column;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    max-width: 1000px;
+    margin: 20px auto;
+    background-color:rgba(24, 29, 49, 0.459);
+    color : #cccccc ;
+    justify-items: center;
+    align-items: center;
+    background: #5e5e5e4e;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+}
+#blog-content, #blog-title{
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #232323;
+    color: rgb(184, 184, 184);
+    border:2px solid saddlebrown;
+}
+
+#blog-form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px auto;
+    width: 80%;
+    display: none;
+}
+#blog-form button{
+    width: 12%;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #dedede;
+    border: none;
+    color: rgb(57, 57, 57);
+}
+
+.container hr{
+    width: 50%;
+    opacity:0.2;
+}
+h2{
+    margin-bottom: 5px;
+}
+
+#btn-blog{
+    display: flex;
+    gap:10px;
+    margin-top: 5px;
+}
+
+.home{
+    display: flex;
+    gap: 20px;
+    margin: 2px auto;
+}
+
+.header #add-blog{
+    border-radius: 0px 0px 20px 20px;
+    border: 2px solid rgb(116, 46, 6);
+    border-top : none;
+    padding : 10px;
+    background-color: #07070755;
+    color: rgb(212, 212, 212);
+    font-family: "Rubik";
+    font-size: 16px;
+}
+
+#status{
+    display: none;
+    position:relative;
+    width: 0px;
+    height: 20px;
+    margin: 20px auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from{ transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+#upl-img{
+    width: 100px;
+    height: 100px;
+    display: none;
+}
