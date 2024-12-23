@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
 import {getFirestore, collection , doc, setDoc, getDoc} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
-import {getStorage, ref, uploadBytes} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js";
+import {getStorage, ref, uploadBytes, getDownloadURL} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js";
 const firebaseConfig = {
   apiKey: "AIzaSyB6D6or0h0tvZMrYiGQ6dIhOk4u21-EKbw",
   authDomain: "astro-iit.firebaseapp.com",
@@ -13,13 +13,14 @@ const firebaseConfig = {
 //!!important TO DO
 //secure the database after testing
 //add sign in
- 
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
 let data = [];
 const blogForm = document.getElementById("blog-form");
+const blogSave = document.getElementById("blog-save");
 const home = document.getElementById('home');
 const blogCancel = document.getElementById('blog-cancel');
 const addBlog = document.getElementById('add-blog');
@@ -39,7 +40,7 @@ img_input.addEventListener('change', (event)=>{
       URL.revokeObjectURL(objURL);
     }}
 });
-blogForm.addEventListener("submit", async function(event){
+blogSave.addEventListener("click", async function(event){
     event.preventDefault();
     const val = document.getElementById("blog-content").value;
     const title = document.getElementById("blog-title").value;
@@ -47,17 +48,10 @@ blogForm.addEventListener("submit", async function(event){
     data = [title,val]; 
     try{
         status.style.display='block';
-        //adding image to storage
-        //creating reference to storage
-        const imgRef = ref(storage, `blog-images/${blog_img.name}`);
-        //uploading bytes
-        const snapshot = await uploadBytes(imgRef, blog_img);
-        const imgURL = await 
         //adding article to database
         await setDoc(doc(db, "blogs", "welcome-blog"), {
           title : data[0],
           content : data[1],
-          image_url:imgURL
         });
         console.log("Added");
         status.style.animation = 'none';
@@ -140,4 +134,12 @@ a.innerHTML="download";
 head.appendChild(a);
 head.onload = () => { URL.revokeObjectURL(objURL);}
 
+
+//adding image to storage
+//creating reference to storage
+const imgRef = ref(storage, `blog-images/welcome-blog.jpg`);
+//uploading bytes
+const snapshot = await uploadBytes(imgRef, blog_img);
+const imgURL = await getDownloadURL(snapshot.ref);
+console.log("Image URL :", imgURL);
 */
