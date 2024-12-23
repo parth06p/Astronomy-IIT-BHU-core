@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-import {getFirestore, collection , doc, setDoc, getDoc} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+import {getFirestore, collection , doc, setDoc, getDocs} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
 import {getStorage, ref, uploadBytes, getDownloadURL} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js";
 const firebaseConfig = {
   apiKey: "AIzaSyB6D6or0h0tvZMrYiGQ6dIhOk4u21-EKbw",
@@ -20,6 +20,7 @@ const storage = getStorage(app);
 
 let data = [];
 let controller = new AbortController();
+let blog_count = 0;
 
 const blogForm = document.getElementById("blog-form");
 const blogSave = document.getElementById("blog-save");
@@ -29,7 +30,7 @@ const addBlog = document.getElementById('add-blog');
 const status = document.getElementById('status');
 const upl_img = document.getElementById('upl-img');
 
-loadBlog();
+loadBlogs();
 
 const img_input = document.getElementById('blog-image');
 img_input.addEventListener('change', (event)=>{
@@ -55,17 +56,17 @@ blogSave.addEventListener("click", async function(event){
     data = [title,val]; 
     try{
         status.style.display='block';
-        
-        //adding image to storage
+        console.log(blog_count);
+        /*//adding image to storage
         //creating reference to storage
-        const imgRef = ref(storage, `blog-images/welcome-blog.jpg`);
+        const imgRef = ref(storage, `blog-images/blog-${blog_count+1}.jpg`);
         //uploading bytes
         const snapshot = await uploadBytes(imgRef, blog_img);
         const imgURL = await getDownloadURL(snapshot.ref);
         console.log("Image URL :", imgURL);
-
+        */
         //adding article to database
-        await setDoc(doc(db, "blogs", "welcome-blog"), {
+        await setDoc(doc(db, "blogs", `blog-${blog_count+1}`), {
           title : data[0],
           content : data[1],
         }, {signal});
@@ -80,7 +81,7 @@ blogSave.addEventListener("click", async function(event){
           status.style.display='none';
           blogForm.reset();
         },500);
-        loadBlog();
+        loadBlogs();
         
     }catch(e){
         console.error(e);
@@ -89,6 +90,7 @@ blogSave.addEventListener("click", async function(event){
 
 
 blogCancel.addEventListener('click', ()=>{
+  loadBlogs();
   controller.abort();
   console.log("upload cancelled");
   blogForm.style.display = 'none';
@@ -104,27 +106,55 @@ addBlog.addEventListener('click', ()=>{
   addBlog.style.display = 'none';
 });
 
-async function loadBlog(){
+async function loadOnlyBlogs(){
+  blog_count = 0;
+  const sn = await getDocs(collection(db, "blogs"));
+  sn.forEach((doc) => {
+    blog_count++;
+  });
+}
+async function loadBlogs(){
+  blog_count = 0;
+  const home = document.getElementById('home');
+  home.innerHTML="";
   //load blogs
-  const blogid = "welcome-blog"
-  const docRef = doc(db, "blogs", blogid);
-  const sn = await getDoc(docRef);
-  if(sn.exists()){
-    //to remove later
-    console.log("Data in DB :", sn.data());
-    displayBlog(sn.data());
-    
-  }else{
-    console.log("Blog not found :", blogid);
-  }
-
+  const sn = await getDocs(collection(db, "blogs"));
+  sn.forEach((doc) => {
+    blog_count++;
+    displayBlog(doc.data(), blog_count);
+  });
 }
 
-function displayBlog(data){
+function displayBlog(data, count){
+  //display each block
   const content = data.content;
-  const title = data.title;
+  const blogTitle = data.title;
   const blogData = content.split("\n");
-  console.log("blog data:", blogData);
+  const home = document.getElementById('home');
+
+  const blogdp = document.createElement('div');
+  blogdp.id = `blog-${count+1}`;
+  blogdp.classList.add('blog-dp');
+  
+  const titlediv = document.createElement('div');
+  titlediv.textContent = blogTitle;
+  titlediv.classList.add('title');
+
+  const hrelement = document.createElement('hr');
+  titlediv.appendChild(hrelement);
+
+  const contentdiv = document.createElement('div');
+  contentdiv.classList.add('content');
+
+  for(let i = 0; i<blogData.length; i++){
+    const para = document.createElement('p');
+    para.innerHTML = blogData[i];
+    contentdiv.appendChild(para);
+  }
+
+  blogdp.appendChild(titlediv);
+  blogdp.append(contentdiv);
+  home.appendChild(blogdp);
 }
 
 

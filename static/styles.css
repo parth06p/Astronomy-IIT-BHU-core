@@ -4,6 +4,7 @@ html{
     align-items: center;
     height:100vh;
     margin: 0;
+    background-attachment: fixed;
     font-family: "Rubik", "Verdana";
 }
 .header{
@@ -75,17 +76,24 @@ h2{
     flex-direction: column;
     background-color: #07070755;
     padding: 20px;
-    width: 400px;
-    max-width: 500px;
+    width: 800px;
     margin: 20px;
     border-radius: 20px;
     margin-top: 0px;
+    margin-bottom: 80px;
 }   
-.content{
-    text-align: left;
+.home .content{
+    line-height: 40px;
+    font-size: 16px;
+    text-align: justify;
+    padding: 0px 30px 10px 30px;
+    margin-bottom: 30px;
 }
-.home h4{
+h4{
     margin: 5px 0px 20px 0px;
+}
+.home .title{
+    font-size: 20px;
 }
 .header #add-blog{
     border-radius: 0px 0px 20px 20px;
