@@ -19,6 +19,8 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 let data = [];
+let controller = new AbortController();
+
 const blogForm = document.getElementById("blog-form");
 const blogSave = document.getElementById("blog-save");
 const home = document.getElementById('home');
@@ -42,17 +44,31 @@ img_input.addEventListener('change', (event)=>{
 });
 blogSave.addEventListener("click", async function(event){
     event.preventDefault();
+    controller.abort();
+    controller = new AbortController();
+    const signal = controller.signal;
+
     const val = document.getElementById("blog-content").value;
     const title = document.getElementById("blog-title").value;
     const blog_img = document.getElementById('blog-image').files[0];
+
     data = [title,val]; 
     try{
         status.style.display='block';
+        
+        //adding image to storage
+        //creating reference to storage
+        const imgRef = ref(storage, `blog-images/welcome-blog.jpg`);
+        //uploading bytes
+        const snapshot = await uploadBytes(imgRef, blog_img);
+        const imgURL = await getDownloadURL(snapshot.ref);
+        console.log("Image URL :", imgURL);
+
         //adding article to database
         await setDoc(doc(db, "blogs", "welcome-blog"), {
           title : data[0],
           content : data[1],
-        });
+        }, {signal});
         console.log("Added");
         status.style.animation = 'none';
         status.innerHTML='✅';
@@ -73,6 +89,8 @@ blogSave.addEventListener("click", async function(event){
 
 
 blogCancel.addEventListener('click', ()=>{
+  controller.abort();
+  console.log("upload cancelled");
   blogForm.style.display = 'none';
   home.style.display = 'flex';
   addBlog.style.display = 'block';
