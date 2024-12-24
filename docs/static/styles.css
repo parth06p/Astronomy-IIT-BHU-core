@@ -86,8 +86,8 @@ h2{
     flex-direction: column;
     background-color: #07070755;
     padding: 20px;
-    width: 800px;
-    margin: 20px;
+    width: 80%;
+    margin: 20px auto;
     border-radius: 20px;
     margin-top: 0px;
     margin-bottom: 80px;
