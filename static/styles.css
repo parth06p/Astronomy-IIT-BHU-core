@@ -5,7 +5,7 @@ html{
     height:100vh;
     margin: 0;
     background-attachment: fixed;
-    font-family: "Rubik", "Verdana";
+    font-family: "Averia Sans Libre", "Rubik", "Verdana";
 }
 .header{
     display: flex;
@@ -32,6 +32,8 @@ html{
     color: rgb(184, 184, 184);
     border:2px solid saddlebrown;
     max-width: 80%;
+    font-family: "Rubik";
+
 }
 
 #blog-form{

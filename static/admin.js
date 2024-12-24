@@ -30,6 +30,7 @@ const addBlog = document.getElementById('add-blog');
 const status = document.getElementById('status');
 const upl_img = document.getElementById('upl-img');
 const loader = document.getElementById('loader-animation');
+const active_blog = document.getElementById('active-blog');
 
 
 loadBlogs();
@@ -92,16 +93,18 @@ blogSave.addEventListener("click", async function(event){
 
 
 blogCancel.addEventListener('click', ()=>{
-  loadBlogs();
   controller.abort();
+  blogForm.reset();
   console.log("upload cancelled");
   blogForm.style.display = 'none';
   home.style.display = 'flex';
   addBlog.style.display = 'block';
+  loadBlogs();
 });
 
 addBlog.addEventListener('click', ()=>{
   status.innerHTML='';
+  active_blog.style.display = 'none';
   loader.style.display = 'none';
   status.style.animation = `spin 1s linear infinite`;
   blogForm.style.display = 'flex';
@@ -115,6 +118,7 @@ async function loadBlogs(){
   const home = document.getElementById('home');
   home.innerHTML="";
   //load blogs
+  active_blog.style.display = 'block';
   loader.style.display = 'block';
   const sn = await getDocs(collection(db, "blogs"));
   sn.forEach((doc) => {
@@ -132,7 +136,7 @@ function displayBlog(data, count){
   const home = document.getElementById('home');
 
   const blogdp = document.createElement('div');
-  blogdp.id = `blog-${count+1}`;
+  blogdp.id = `blog-${count}`;
   blogdp.classList.add('blog-dp');
   
   const titlediv = document.createElement('div');
