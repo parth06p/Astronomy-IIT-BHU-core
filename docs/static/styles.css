@@ -10,6 +10,13 @@ html{
 .header{
     display: flex;
     flex-direction: column;
+    position: sticky;
+    top: 0;        
+    text-align: center;
+    z-index: 1000;   
+    width: 100%; 
+    backdrop-filter: blur(2px);
+
 }
 .container{
     display: flex;
