@@ -29,6 +29,8 @@ const blogCancel = document.getElementById('blog-cancel');
 const addBlog = document.getElementById('add-blog');
 const status = document.getElementById('status');
 const upl_img = document.getElementById('upl-img');
+const loader = document.getElementById('loader-animation');
+
 
 loadBlogs();
 
@@ -99,30 +101,27 @@ blogCancel.addEventListener('click', ()=>{
 });
 
 addBlog.addEventListener('click', ()=>{
-  status.innerHTML='⭐';
+  status.innerHTML='';
+  loader.style.display = 'none';
   status.style.animation = `spin 1s linear infinite`;
   blogForm.style.display = 'flex';
   home.style.display = 'none';
   addBlog.style.display = 'none';
 });
 
-async function loadOnlyBlogs(){
-  blog_count = 0;
-  const sn = await getDocs(collection(db, "blogs"));
-  sn.forEach((doc) => {
-    blog_count++;
-  });
-}
+
 async function loadBlogs(){
   blog_count = 0;
   const home = document.getElementById('home');
   home.innerHTML="";
   //load blogs
+  loader.style.display = 'block';
   const sn = await getDocs(collection(db, "blogs"));
   sn.forEach((doc) => {
     blog_count++;
     displayBlog(doc.data(), blog_count);
   });
+  loader.style.display = 'none';
 }
 
 function displayBlog(data, count){

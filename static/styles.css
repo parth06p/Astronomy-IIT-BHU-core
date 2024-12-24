@@ -31,6 +31,7 @@ html{
     background-color: #232323;
     color: rgb(184, 184, 184);
     border:2px solid saddlebrown;
+    max-width: 80%;
 }
 
 #blog-form{
@@ -109,18 +110,39 @@ h4{
 #status{
     display: none;
     position:relative;
-    width: 0px;
-    height: 20px;
+    border: 2px solid rgb(0, 134, 149);
+    border-radius: 50%;
+    border-top: #3498db;
+    width: 30px;
+    height: 30px;
     margin: 20px auto;
-    animation: spin 1s linear infinite;
+    -webkit-animation: spin 0.7s linear infinite; 
+    animation: spin 0.7s linear infinite;
 }
 
-@keyframes spin {
-    from{ transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
 #upl-img{
     width: 100px;
     height: 100px;
     display: none;
+}
+
+.loader{
+    margin: 50px;
+    border: 4px solid #f3f3f300;
+    border-radius: 50%;
+    border-top: 8px solid #3498db;
+    border-bottom: 8px solid #34dbd5;
+    width: 30px;
+    height: 30px;
+    -webkit-animation: spin 0.7s linear infinite; 
+    animation: spin 0.7s linear infinite;
+}
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
