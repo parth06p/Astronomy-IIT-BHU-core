@@ -167,7 +167,6 @@ window.addEventListener('scroll',function(){
   sections.forEach(section => {
     const rect = section.getBoundingClientRect();
     if (rect.top <= 0 && rect.bottom >= 0) {
-        // Check if the section is in view
         const sectionTitle = section.querySelector('.title').textContent;
         curTitle = sectionTitle;
     }
