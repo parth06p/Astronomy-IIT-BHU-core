@@ -6,6 +6,7 @@ html{
     margin: 0;
     background-attachment: fixed;
     font-family: "Averia Sans Libre", "Rubik", "Verdana";
+    scroll-behavior: smooth;
 }
 .header{
     display: flex;
@@ -16,7 +17,6 @@ html{
     z-index: 1000;   
     width: 100%; 
     backdrop-filter: blur(2px);
-
 }
 .container{
     display: flex;

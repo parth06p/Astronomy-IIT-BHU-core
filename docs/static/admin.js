@@ -160,7 +160,20 @@ function displayBlog(data, count){
   home.appendChild(blogdp);
 }
 
-
+window.addEventListener('scroll',function(){
+  const sections = document.querySelectorAll('.blog-dp');
+  const header = document.getElementById('header-text');
+  let curTitle = "Welcome to Astronomy Club Blogger";
+  sections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= 0 && rect.bottom >= 0) {
+        // Check if the section is in view
+        const sectionTitle = section.querySelector('.title').textContent;
+        curTitle = sectionTitle;
+    }
+  });
+  header.textContent = curTitle;
+});
 
 
 /*
