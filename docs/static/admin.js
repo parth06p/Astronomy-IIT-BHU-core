@@ -21,6 +21,7 @@ const storage = getStorage(app);
 let data = [];
 let controller = new AbortController();
 let blog_count = 0;
+let addingBlog = false;
 
 const blogForm = document.getElementById("blog-form");
 const blogSave = document.getElementById("blog-save");
@@ -31,6 +32,7 @@ const status = document.getElementById('status');
 const upl_img = document.getElementById('upl-img');
 const loader = document.getElementById('loader-animation');
 const active_blog = document.getElementById('active-blog');
+const header = document.getElementById('header-text');
 
 
 loadBlogs();
@@ -77,6 +79,7 @@ blogSave.addEventListener("click", async function(event){
         status.style.animation = 'none';
         status.innerHTML='✅';
         setTimeout(() => {
+          addingBlog = false;
           upl_img.style.display='none';
           blogForm.style.display = 'none';
           home.style.display = 'flex';
@@ -95,6 +98,8 @@ blogSave.addEventListener("click", async function(event){
 blogCancel.addEventListener('click', ()=>{
   controller.abort();
   blogForm.reset();
+  addingBlog = false;
+  header.textContent = "Welcome to Astronomy Club Blogger";
   console.log("upload cancelled");
   blogForm.style.display = 'none';
   home.style.display = 'flex';
@@ -104,6 +109,8 @@ blogCancel.addEventListener('click', ()=>{
 
 addBlog.addEventListener('click', ()=>{
   status.innerHTML='';
+  header.textContent = "New post";
+  addingBlog = true;
   active_blog.style.display = 'none';
   loader.style.display = 'none';
   status.style.animation = `spin 1s linear infinite`;
@@ -161,17 +168,20 @@ function displayBlog(data, count){
 }
 
 window.addEventListener('scroll',function(){
-  const sections = document.querySelectorAll('.blog-dp');
-  const header = document.getElementById('header-text');
-  let curTitle = "Welcome to Astronomy Club Blogger";
-  sections.forEach(section => {
-    const rect = section.getBoundingClientRect();
-    if (rect.top <= 0 && rect.bottom >= 0) {
-        const sectionTitle = section.querySelector('.title').textContent;
-        curTitle = sectionTitle;
-    }
-  });
-  header.textContent = curTitle;
+  if(!addingBlog){
+    const sections = document.querySelectorAll('.blog-dp');
+    let curTitle = "Welcome to Astronomy Club Blogger";
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= 0 && rect.bottom >= 0) {
+          const sectionTitle = section.querySelector('.title').textContent;
+          curTitle = sectionTitle;
+      }
+    });
+    header.textContent = curTitle;
+  }else{
+    header.textContent = "New Post";
+  }
 });
 
 
