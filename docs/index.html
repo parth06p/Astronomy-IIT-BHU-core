@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Blog</title>
-    <link rel="stylesheet" href = "./static/styles.css" >
+    <link rel="stylesheet" href = "/static/styles.css" >
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +25,18 @@
             <span>Unpublished Post :</span>
             <label for="blog-title"></label>
             <input type="text" id="blog-title" class="blog-inp-syl" placeholder="Enter blog title" required>
+            <label for="blog-author"></label>
+            <input type="text" id="blog-author" class="blog-inp-syl" placeholder="Enter author" required>
+            <label for="blog-slug"></label>
+            <input type="text" id="blog-slug" class="blog-inp-syl" placeholder="Enter slug" required>
+            <label for="blog-date"></label>
+            <input type="date" id="blog-date" class="blog-inp-syl" required>
+            <label for="blog-category"></label>
+            <input type="text" id="blog-category" class="blog-inp-syl" placeholder="Enter comma separated category" required>
+            <label for="blog-description"></label>
+            <input type="text" id="blog-description" class="blog-inp-syl" placeholder="Enter description" required>
+            <label for="blog-heading"></label>
+            <input type="text" id="blog-heading" class="blog-inp-syl" placeholder="Enter heading" required>
             <label for="blog-content"></label>
             <textarea id = "blog-content" class="blog-inp-syl" rows = "10" cols = "50" placeholder="Write your paragraph" autocorrect="on" required></textarea>
             <label for="blog-image" style="font-size: 15px; color:rgb(180, 180, 180)">add image :</label>
@@ -41,5 +53,5 @@
     <br>
     <br>
 </body>
-<script src = "./static/admin.js" type="module"></script>
+<script src = "/static/admin.js" type="module"></script>
 </html>

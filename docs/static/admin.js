@@ -9,6 +9,7 @@ const firebaseConfig = {
   messagingSenderId: "156365410266",
   appId: "1:156365410266:web:02809445d3c6dd39667ae3"
 };
+
 //!!important TO DO
 //secure the database after testing
 //add sign in
@@ -53,11 +54,16 @@ blogSave.addEventListener("click", async function(event){
     controller = new AbortController();
     const signal = controller.signal;
 
-    const val = document.getElementById("blog-content").value;
+    const content = document.getElementById("blog-content").value;
     const title = document.getElementById("blog-title").value;
     const blog_img = document.getElementById('blog-image').files[0];
+    const author = document.getElementById("blog-author").value;
+    const slug = document.getElementById("blog-slug").value;
+    const date = document.getElementById("blog-date").value;
+    const cat = document.getElementById("blog-category").value;
+    const heading = document.getElementById("blog-heading").value;
+    const des = document.getElementById("blog-description").value;
 
-    data = [title,val]; 
     try{
         status.style.display='block';
         console.log(blog_count);
@@ -71,8 +77,15 @@ blogSave.addEventListener("click", async function(event){
         */
         //adding article to database
         await setDoc(doc(db, "blogs", `blog-${blog_count+1}`), {
-          title : data[0],
-          content : data[1],
+          title : title,
+          content : content,
+          author: author,
+          slug: slug,
+          description: des,
+          date: date,
+          category: cat,
+          heading:heading,
+          content:content
         }, {signal});
         console.log("Added");
         status.style.animation = 'none';
