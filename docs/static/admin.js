@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
 import {getFirestore, collection , doc, setDoc, getDocs} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
-import {getStorage, ref, uploadBytes, getDownloadURL} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js";
+//note that nextjs project is working with fierbase sdk not cdn
 const firebaseConfig = {
   apiKey: "AIzaSyB6D6or0h0tvZMrYiGQ6dIhOk4u21-EKbw",
   authDomain: "astro-iit.firebaseapp.com",
@@ -10,14 +10,19 @@ const firebaseConfig = {
   appId: "1:156365410266:web:02809445d3c6dd39667ae3"
 };
 
+
+const client = new window.Appwrite.Client()
+    .setEndpoint('https://cloud.appwrite.io/v1')
+    .setProject('67777691001b45d492b8');
+
+const storage = new window.Appwrite.Storage(client);
+
 //!!important TO DO
 //secure the database after testing
 //add sign in
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const storage = getStorage(app);
-
 let data = [];
 let controller = new AbortController();
 let blog_count = 0;
@@ -29,7 +34,6 @@ const home = document.getElementById('home');
 const blogCancel = document.getElementById('blog-cancel');
 const addBlog = document.getElementById('add-blog');
 const status = document.getElementById('status');
-const upl_img = document.getElementById('upl-img');
 const loader = document.getElementById('loader-animation');
 const active_blog = document.getElementById('active-blog');
 const header = document.getElementById('header-text');
@@ -37,17 +41,6 @@ const header = document.getElementById('header-text');
 
 loadBlogs();
 
-const img_input = document.getElementById('blog-image');
-img_input.addEventListener('change', (event)=>{
-  const upl = event.target.files[0];
-  if(upl){
-    let objURL = URL.createObjectURL(img_input.files[0]);
-    upl_img.src = objURL;
-    upl_img.style.display='block';
-    upl_img.onload = ()=>{
-      URL.revokeObjectURL(objURL);
-    }}
-});
 blogSave.addEventListener("click", async function(event){
     event.preventDefault();
     controller.abort();
@@ -57,6 +50,7 @@ blogSave.addEventListener("click", async function(event){
     const content = document.getElementById("blog-content").value;
     const title = document.getElementById("blog-title").value;
     const blog_img = document.getElementById('blog-image').files[0];
+    const writer_img = document.getElementById('writer-image').files[0];
     const author = document.getElementById("blog-author").value;
     const slug = document.getElementById("blog-slug").value;
     const date = document.getElementById("blog-date").value;
@@ -66,15 +60,30 @@ blogSave.addEventListener("click", async function(event){
 
     try{
         status.style.display='block';
-        console.log(blog_count);
-        /*//adding image to storage
-        //creating reference to storage
-        const imgRef = ref(storage, `blog-images/blog-${blog_count+1}.jpg`);
-        //uploading bytes
-        const snapshot = await uploadBytes(imgRef, blog_img);
-        const imgURL = await getDownloadURL(snapshot.ref);
-        console.log("Image URL :", imgURL);
-        */
+        console.log("Blog count :",blog_count);
+        //adding header image to appwrite storage
+        const promise = storage.createFile(
+          '677777dc00318c84924c',
+          `blog-${blog_count+1}`,
+          blog_img
+        );
+        promise.then(function (response) {
+            console.log("check 1"); 
+        }, function (error) {
+            console.log(error);
+        });
+
+        //adding writer image to appwrite storage
+        const pr = storage.createFile(
+          '677777dc00318c84924c',
+          `blog-${blog_count+1}-writer`,
+          writer_img
+        );
+        pr.then(function (response) {
+            console.log("check 2"); 
+        }, function (error) {
+            console.log(error);
+        });
         //adding article to database
         await setDoc(doc(db, "blogs", `blog-${blog_count+1}`), {
           title : title,
@@ -92,7 +101,6 @@ blogSave.addEventListener("click", async function(event){
         status.innerHTML='✅';
         setTimeout(() => {
           addingBlog = false;
-          upl_img.style.display='none';
           blogForm.style.display = 'none';
           home.style.display = 'flex';
           addBlog.style.display = 'block';
