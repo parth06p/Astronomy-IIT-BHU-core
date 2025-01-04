@@ -8,22 +8,12 @@ html{
     font-family: "Averia Sans Libre", "Rubik", "Verdana";
     scroll-behavior: smooth;
 }
-.header{
-    display: flex;
-    flex-direction: column;
-    position: sticky;
-    top: 0;        
-    text-align: center;
-    z-index: 1000;   
-    width: 100%;
-    backdrop-filter: blur(2px);
-    margin: 0px auto;
-}
+
 .container{
     display: flex;
     flex-direction: column;
     max-width: 1000px;
-    margin: 20px auto;
+    margin: 10px auto;
     background-color:rgba(24, 29, 49, 0.459);
     color : #cccccc ;
     justify-items: center;
@@ -50,7 +40,6 @@ html{
     gap: 10px;
     margin: 10px auto;
     width: 80%;
-    display: none;
 }
 #blog-form button{
     width: 12%;
@@ -62,71 +51,13 @@ html{
     color: rgb(57, 57, 57);
 }
 
-.container hr{
-    width: 50%;
-    opacity:0.2;
-}
-h2{
-    margin-bottom: 5px;
-}
-
 #btn-blog{
     display: flex;
     gap:10px;
     margin-top: 5px;
 }
 
-.home{
-    display: flex;
-    flex-direction: column;
-    margin: 0px auto;
-    text-align: center;
-}
-.home .blog-dp{
-    display: flex;
-    flex-direction: column;
-    background-color: #07070755;
-    padding: 20px;
-    width: 80%;
-    margin: 20px auto;
-    border-radius: 20px;
-    margin-top: 0px;
-    margin-bottom: 80px;
-}   
-.home .content{
-    line-height: 40px;
-    font-size: 16px;
-    text-align: justify;
-    padding: 0px 30px 10px 30px;
-    margin-bottom: 30px;
-}
-h4{
-    margin: 5px 0px 20px 0px;
-}
-.home .title{
-    font-size: 20px;
-}
-.option-btn{
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-
-}
-#user-login, #add-blog{
-    border-radius: 0px 0px 20px 20px;
-    border: 2px solid rgb(116, 46, 6);
-    border-top : none;
-    padding : 10px;
-    background-color: #07070755;
-    color: rgb(212, 212, 212);
-    font-family: "Rubik";
-    font-size: 16px;
-    width: 50%;
-    
-}
-
 #status{
-    display: none;
     position:relative;
     border: 2px solid rgb(0, 134, 149);
     border-radius: 50%;
@@ -134,20 +65,6 @@ h4{
     width: 30px;
     height: 30px;
     margin: 20px auto;
-    -webkit-animation: spin 0.7s linear infinite; 
-    animation: spin 0.7s linear infinite;
-}
-
-
-.loader{
-    display : none;
-    margin: 50px;
-    border: 4px solid #f3f3f300;
-    border-radius: 50%;
-    border-top: 8px solid #3498db;
-    border-bottom: 8px solid #34dbd5;
-    width: 30px;
-    height: 30px;
     -webkit-animation: spin 0.7s linear infinite; 
     animation: spin 0.7s linear infinite;
 }
