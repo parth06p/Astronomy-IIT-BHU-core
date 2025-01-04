@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
 import {getFirestore, collection , doc, setDoc, getDocs} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+import { GoogleAuthProvider , getAuth, signInWithPopup, signOut, setPersistence, browserSessionPersistence} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 //note that nextjs project is working with fierbase sdk not cdn
 const firebaseConfig = {
   apiKey: "AIzaSyB6D6or0h0tvZMrYiGQ6dIhOk4u21-EKbw",
@@ -23,121 +24,57 @@ const storage = new window.Appwrite.Storage(client);
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-let data = [];
-let controller = new AbortController();
+const provider = new GoogleAuthProvider();
+const auth = getAuth(app);
 let blog_count = 0;
 let addingBlog = false;
 
-const blogForm = document.getElementById("blog-form");
-const blogSave = document.getElementById("blog-save");
-const home = document.getElementById('home');
-const blogCancel = document.getElementById('blog-cancel');
-const addBlog = document.getElementById('add-blog');
-const status = document.getElementById('status');
+const user_login = document.getElementById('user-login');
 const loader = document.getElementById('loader-animation');
 const active_blog = document.getElementById('active-blog');
 const header = document.getElementById('header-text');
-
+const addBlog = document.getElementById('add-blog');
 
 loadBlogs();
 
-blogSave.addEventListener("click", async function(event){
-    event.preventDefault();
-    controller.abort();
-    controller = new AbortController();
-    const signal = controller.signal;
-
-    const content = document.getElementById("blog-content").value;
-    const title = document.getElementById("blog-title").value;
-    const blog_img = document.getElementById('blog-image').files[0];
-    const writer_img = document.getElementById('writer-image').files[0];
-    const author = document.getElementById("blog-author").value;
-    const slug = document.getElementById("blog-slug").value;
-    const date = document.getElementById("blog-date").value;
-    const cat = document.getElementById("blog-category").value;
-    const heading = document.getElementById("blog-heading").value;
-    const des = document.getElementById("blog-description").value;
-
-    try{
-        status.style.display='block';
-        console.log("Blog count :",blog_count);
-        //adding header image to appwrite storage
-        const promise = storage.createFile(
-          '677777dc00318c84924c',
-          `blog-${blog_count+1}`,
-          blog_img
-        );
-        promise.then(function (response) {
-            console.log("check 1"); 
-        }, function (error) {
-            console.log(error);
-        });
-
-        //adding writer image to appwrite storage
-        const pr = storage.createFile(
-          '677777dc00318c84924c',
-          `blog-${blog_count+1}-writer`,
-          writer_img
-        );
-        pr.then(function (response) {
-            console.log("check 2"); 
-        }, function (error) {
-            console.log(error);
-        });
-        //adding article to database
-        await setDoc(doc(db, "blogs", `blog-${blog_count+1}`), {
-          title : title,
-          content : content,
-          author: author,
-          slug: slug,
-          description: des,
-          date: date,
-          category: cat,
-          heading:heading,
-          content:content
-        }, {signal});
-        console.log("Added");
-        status.style.animation = 'none';
-        status.innerHTML='✅';
-        setTimeout(() => {
-          addingBlog = false;
-          blogForm.style.display = 'none';
-          home.style.display = 'flex';
-          addBlog.style.display = 'block';
-          status.style.display='none';
-          blogForm.reset();
-        },500);
-        loadBlogs();
-        
-    }catch(e){
-        console.error(e);
-    }
+auth.onAuthStateChanged((user)=>{
+  if(user){
+    user_login.innerHTML = "Sign Out";
+  }
+  else{
+    user_login.innerHTML="Sign In";
+  }
 });
+user_login.addEventListener('click', userSession);
 
 
-blogCancel.addEventListener('click', ()=>{
-  controller.abort();
-  blogForm.reset();
-  addingBlog = false;
-  header.textContent = "Welcome to Astronomy Club Blogger";
-  console.log("upload cancelled");
-  blogForm.style.display = 'none';
-  home.style.display = 'flex';
-  addBlog.style.display = 'block';
-  loadBlogs();
-});
+function userSession(){
+  if(!auth.currentUser){
+    signInWithPopup(auth, provider)
+    .then(result => {
+      const user = result.user;
+      const curid = user.uid;
+      if(curid != "8ZH2jzmvexXUuUWrTksucJ8ZKy23"){
+        signOut(auth).then(()=>{
+          window.alert("admin access only");
+        })
+      }
+      user_login.innerHTML="Sign Out";
+      console.log("logged in succesfully");
+      window.location.href="../index.html";
+    }).catch((error)=>{
+      console.log("authorization error");
+      console.log(error);
+    })
+  }else{
+    signOut(auth).then(()=>{
+      console.log("logged out successfully");
+      user_login.innerHTML = "Sign In";
+    })
+    window.location.href='../index.html';
+  }
+}
 
-addBlog.addEventListener('click', ()=>{
-  status.innerHTML='';
-  header.textContent = "New post";
-  addingBlog = true;
-  active_blog.style.display = 'none';
-  loader.style.display = 'none';
-  status.style.animation = `spin 1s linear infinite`;
-  blogForm.style.display = 'flex';
-  home.style.display = 'none';
-  addBlog.style.display = 'none';
-});
 
 
 async function loadBlogs(){
@@ -199,12 +136,15 @@ window.addEventListener('scroll',function(){
       }
     });
     header.textContent = curTitle;
-  }else{
-    header.textContent = "New Post";
   }
 });
 
-
+addBlog.addEventListener('click',(event)=>{
+  auth.onAuthStateChanged((user)=>{
+    if(user){window.location.href="../post.html";}
+    else{window.alert("Error 401 : Unauthorized");}
+  });
+})
 /*
 EXTRA KNOWLEDGE : 
 

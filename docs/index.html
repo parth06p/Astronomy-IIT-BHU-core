@@ -14,7 +14,10 @@
 <body>
     <div class="container">
         <div class="header" id="header">
-            <button id="add-blog">➕New Post</button>
+            <div class="option-btn">
+                <button id="user-login">👤</button>
+                <button id="add-blog">New Post</button>
+            </div>
             <h2 id = 'header-text'>Welcome to Astronomy Club Blogger</h2>  
             <hr>
         </div>
@@ -22,35 +25,6 @@
         <div class="loader" id="loader-animation"></div>
         <div class="home" id="home">
         </div>
-        <form id = "blog-form">
-            <span>Unpublished Post :</span>
-            <label for="blog-title"></label>
-            <input type="text" id="blog-title" class="blog-inp-syl" placeholder="Enter blog title" required>
-            <label for="blog-author"></label>
-            <input type="text" id="blog-author" class="blog-inp-syl" placeholder="Enter author" required>
-            <label for="blog-slug"></label>
-            <input type="text" id="blog-slug" class="blog-inp-syl" placeholder="Enter slug" required>
-            <label for="blog-date"></label>
-            <input type="date" id="blog-date" class="blog-inp-syl" placeholder="Enter date" required>
-            <label for="blog-category"></label>
-            <input type="text" id="blog-category" class="blog-inp-syl" placeholder="Enter comma separated category" required>
-            <label for="blog-description"></label>
-            <input type="text" id="blog-description" class="blog-inp-syl" placeholder="Enter description" required>
-            <label for="blog-heading"></label>
-            <input type="text" id="blog-heading" class="blog-inp-syl" placeholder="Enter heading" required>
-            <label for="blog-content"></label>
-            <textarea id = "blog-content" class="blog-inp-syl" rows = "10" cols = "50" placeholder="Write your paragraph" autocorrect="on" required></textarea>
-            <label for="blog-image" style="font-size: 15px; color:rgb(180, 180, 180)">add blog image :</label>
-            <input type="file" id="blog-image" accept="image/*" required>
-            <label for="writer-image" style="font-size: 15px; color:rgb(180, 180, 180)">add writer image :</label>
-            <input type="file" id="writer-image" accept="image/*" required>
-            <p id="status"></p>
-
-            <div id="btn-blog">
-                <button type="submit" id="blog-save">Save</button>
-                <button type="cancel" id="blog-cancel">cancel</button>
-            </div>
-        </form>     
     </div>
     <br>
     <br>
