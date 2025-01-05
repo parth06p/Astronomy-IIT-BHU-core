@@ -11,13 +11,6 @@ const firebaseConfig = {
   appId: "1:156365410266:web:02809445d3c6dd39667ae3"
 };
 
-
-const client = new window.Appwrite.Client()
-    .setEndpoint('https://cloud.appwrite.io/v1')
-    .setProject('67777691001b45d492b8');
-
-const storage = new window.Appwrite.Storage(client);
-
 //!!important TO DO
 //secure the database after testing
 //add sign in
