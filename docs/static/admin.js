@@ -35,6 +35,16 @@ const active_blog = document.getElementById('active-blog');
 const header = document.getElementById('header-text');
 const addBlog = document.getElementById('add-blog');
 
+setPersistence(auth, browserSessionPersistence)
+  .then(() => {
+    // Persistence set successfully
+    console.log("working");
+  })
+  .catch((error) => {
+    // Error setting persistence
+    console.error("Error setting persistence:", error);
+  });
+
 loadBlogs();
 
 auth.onAuthStateChanged((user)=>{
