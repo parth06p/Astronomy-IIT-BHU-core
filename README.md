@@ -1,3 +1,3 @@
 # Astronomy-IIT-BHU-Blogger
 
-The website to write the data to official website of Astronomy Club, IIT BHU
+This website is to write data to the official website of Astronomy Club, IIT BHU
