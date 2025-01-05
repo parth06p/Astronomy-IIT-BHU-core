@@ -124,13 +124,14 @@ function displayBlog(data, count){
   home.appendChild(blogdp);
 }
 
+
 window.addEventListener('scroll',function(){
   if(!addingBlog){
     const sections = document.querySelectorAll('.blog-dp');
     let curTitle = "Welcome to Astronomy Club Blogger";
     sections.forEach(section => {
       const rect = section.getBoundingClientRect();
-      if (rect.top <= 0 && rect.bottom >= 0) {
+      if (rect.top <= 50 && rect.bottom >= 0) {
           const sectionTitle = section.querySelector('.title').textContent;
           curTitle = sectionTitle;
       }
