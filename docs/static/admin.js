@@ -2,13 +2,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebas
 import {getFirestore, collection , doc, setDoc, getDocs} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
 import { GoogleAuthProvider , getAuth, signInWithPopup, signOut, setPersistence, browserSessionPersistence} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 //note that nextjs project is working with fierbase sdk not cdn
+
 const firebaseConfig = {
-  apiKey: "AIzaSyB6D6or0h0tvZMrYiGQ6dIhOk4u21-EKbw",
-  authDomain: "astro-iit.firebaseapp.com",
-  projectId: "astro-iit",
-  storageBucket: "astro-iit.firebasestorage.app",
-  messagingSenderId: "156365410266",
-  appId: "1:156365410266:web:02809445d3c6dd39667ae3"
+  apiKey: "AIzaSyCT_txTnewyhH8VFFNO5jgHvxyerbIzhk4",
+  authDomain: "astro-website-48956.firebaseapp.com",
+  projectId: "astro-website-48956",
+  storageBucket: "astro-website-48956.firebasestorage.app",
+  messagingSenderId: "1026726115415",
+  appId: "1:1026726115415:web:320cb60bf7dfddc5950b12",
+  measurementId: "G-60CE35ZVV8"
 };
 
 //!!important TO DO
@@ -57,7 +59,7 @@ function userSession(){
     .then(result => {
       const user = result.user;
       const curid = user.uid;
-      if(curid != "8ZH2jzmvexXUuUWrTksucJ8ZKy23"){
+      if(curid != "OsnOxOuNOWcNR8VTqaoteRMGLmq1"){
         signOut(auth).then(()=>{
           window.alert("admin access only");
         })
