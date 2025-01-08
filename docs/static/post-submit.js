@@ -49,9 +49,19 @@ const blogCancel = document.getElementById('blog-cancel');
 const status = document.getElementById('status');
 status.style.display = "none";
 
+const adminRef = doc(db, "admin", "users");
+const admin = await getDoc(adminRef);
+const users = admin.data();
+
 auth.onAuthStateChanged((user)=>{
-    if(user){console.log("authorized");}
-    else{window.alert("Error 401 : unauthorized"); window.location.href='../index.html'}
+    if(user){
+      let allowed = 0;
+      for(let ukey in users){
+        if(user.uid == users[ukey]){allowed = 1;}
+      }
+      if(!allowed){window.alert("Error 401 : unauthorized"); window.location.href='../index.html';}
+    }
+    else{window.alert("Error 401 : unauthorized"); window.location.href='../index.html';}
 });
 
 extractBlogs();

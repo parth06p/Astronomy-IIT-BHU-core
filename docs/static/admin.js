@@ -42,6 +42,10 @@ setPersistence(auth, browserSessionPersistence)
 
 loadBlogs();
 
+const adminRef = doc(db, "admin", "users");
+const admin = await getDoc(adminRef);
+const users = admin.data();
+
 auth.onAuthStateChanged((user)=>{
   if(user){
     user_login.innerHTML = "Sign Out";
@@ -59,10 +63,18 @@ function userSession(){
     .then(result => {
       const user = result.user;
       const curid = user.uid;
-      if(curid != "OsnOxOuNOWcNR8VTqaoteRMGLmq1"){
+      let allowed = 0;
+      for(let ukey in users){
+        if(curid == users[ukey] ){
+          allowed = 1 ;
+        }
+      }   
+      if(!allowed){
         signOut(auth).then(()=>{
           window.alert("admin access only");
-        })
+        })   
+        console.log("non admin login attemped");
+        return;
       }
       user_login.innerHTML="Sign Out";
       console.log("logged in succesfully");
