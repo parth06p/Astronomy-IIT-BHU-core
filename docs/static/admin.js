@@ -171,11 +171,11 @@ auth.onAuthStateChanged((user)=>{
 });
 
 addBlog.addEventListener('click',(event)=>{
-  redirectUser("../static/post.html");
+  redirectUser("../post.html");
 })
 
 addProject.addEventListener('click', (event)=>{
-  redirectUser("../static/project.html");
+  redirectUser("../project.html");
 })
 
 /*
