@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit a New Post</title>
+    <title>Add new Post to Database</title>
     <link rel="stylesheet" href = "./static/form-styles.css" >
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="container">
-        <form id = "blog-form">
+        <form id = "blog-form" class="form-syl">
             <span>Unpublished Post :</span>
             <label for="blog-title"></label>
             <input type="text" id="blog-title" class="blog-inp-syl" placeholder="Enter blog title" required>
@@ -37,7 +37,7 @@
             <input type="file" id="writer-image" accept="image/*" required>
             <p id="status"></p>
 
-            <div id="btn-blog">
+            <div id="btn-blog" class="event-btn">
                 <button type="submit" id="blog-save">Save</button>
                 <button type="cancel" id="blog-cancel">cancel</button>
             </div>
