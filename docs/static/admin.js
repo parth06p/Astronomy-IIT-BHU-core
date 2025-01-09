@@ -1,8 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-import {getFirestore, collection , doc, setDoc, getDocs} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+import {getFirestore, collection , doc, setDoc, getDocs, getDoc} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
 import { GoogleAuthProvider , getAuth, signInWithPopup, signOut, setPersistence, browserSessionPersistence} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 //note that nextjs project is working with fierbase sdk not cdn
-
 const firebaseConfig = {
   apiKey: "AIzaSyCT_txTnewyhH8VFFNO5jgHvxyerbIzhk4",
   authDomain: "astro-website-48956.firebaseapp.com",
@@ -29,11 +28,13 @@ const loader = document.getElementById('loader-animation');
 const active_blog = document.getElementById('active-blog');
 const header = document.getElementById('header-text');
 const addBlog = document.getElementById('add-blog');
+const addProject = document.getElementById('add-project');
+const homePath = "../index.html";
 
 setPersistence(auth, browserSessionPersistence)
   .then(() => {
     // Persistence set successfully
-    console.log("working");
+    console.log("session working");
   })
   .catch((error) => {
     // Error setting persistence
@@ -54,6 +55,7 @@ auth.onAuthStateChanged((user)=>{
     user_login.innerHTML="Sign In";
   }
 });
+
 user_login.addEventListener('click', userSession);
 
 
@@ -76,9 +78,10 @@ function userSession(){
         console.log("non admin login attemped");
         return;
       }
+      
       user_login.innerHTML="Sign Out";
       console.log("logged in succesfully");
-      window.location.href="../index.html";
+      window.location.href=homePath;
     }).catch((error)=>{
       console.log("authorization error");
       console.log(error);
@@ -88,7 +91,7 @@ function userSession(){
       console.log("logged out successfully");
       user_login.innerHTML = "Sign In";
     })
-    window.location.href='../index.html';
+    window.location.href= homePath;
   }
 }
 
@@ -141,7 +144,6 @@ function displayBlog(data, count){
   home.appendChild(blogdp);
 }
 
-
 window.addEventListener('scroll',function(){
   if(!addingBlog){
     const sections = document.querySelectorAll('.blog-dp');
@@ -156,13 +158,26 @@ window.addEventListener('scroll',function(){
     header.textContent = curTitle;
   }
 });
+let redirectUser;
+auth.onAuthStateChanged((user)=>{
+  redirectUser = (page)=>{
+    if(user){
+      window.location.href = page;
+    }else{
+      window.alert("Error 401 : Unauthorized");
+    }
+    return;
+  }
+});
 
 addBlog.addEventListener('click',(event)=>{
-  auth.onAuthStateChanged((user)=>{
-    if(user){window.location.href="../post.html";}
-    else{window.alert("Error 401 : Unauthorized");}
-  });
+  redirectUser("../post.html");
 })
+
+addProject.addEventListener('click', (event)=>{
+  redirectUser("../project.html");
+})
+
 /*
 EXTRA KNOWLEDGE : 
 
