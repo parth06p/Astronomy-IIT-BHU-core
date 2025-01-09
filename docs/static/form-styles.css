@@ -34,14 +34,14 @@ html{
 
 }
 
-#blog-form{
+.form-syl{
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin: 10px auto;
     width: 80%;
 }
-#blog-form button{
+.form-syl button{
     width: 12%;
     font-weight: bold;
     padding: 5px;
