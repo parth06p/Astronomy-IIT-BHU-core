@@ -74,6 +74,10 @@ psave.addEventListener('click',async (event)=>{
     }
 
     try{
+      //adding to appwrite
+      
+
+      //adding to firebase
         await setDoc(doc(db, "projects",`project-${pcount+1}`),{
           title: title,
           description: des,

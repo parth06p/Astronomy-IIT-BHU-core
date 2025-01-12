@@ -22,8 +22,6 @@ const storage = new window.Appwrite.Storage(client);
 
 //!!important TO DO
 //secure the database after testing
-//add sign in
-//add an empty field check
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
