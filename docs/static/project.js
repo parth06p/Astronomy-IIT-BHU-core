@@ -85,3 +85,12 @@ pcancel.addEventListener('click',(event)=>{
     projectForm.reset();
     window.location.href = homePath;
 });
+
+
+async function extractProject() {
+  pcount = 0;
+  const snap = await getDocs(collection(db, "projects"));
+  snap.forEach((project) => {
+    pcount++;
+  });
+}
