@@ -49,6 +49,8 @@ setPersistence(auth, browserSessionPersistence)
   });
 
 let controller = new AbortController();
+let pcount = 0;
+extractProject();
 
 const homePath = "../index.html";
 const projectForm = document.getElementById("project-form");
@@ -72,7 +74,16 @@ psave.addEventListener('click',async (event)=>{
     }
 
     try{
-        console.log("Form extracted succesfully");
+        await setDoc(doc(db, "projects",`project-${pcount+1}`),{
+          title: title,
+          description: des,
+          imgFirst: imgFirst
+        }, {signal});
+        console.log("Project submitted");
+        setTimeout(()=>{
+          projectForm.reset();
+          window.location.href ="../index.html";
+        });
     }
     catch(e){
         console.log("Error in Database :", e);
