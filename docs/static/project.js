@@ -75,7 +75,16 @@ psave.addEventListener('click',async (event)=>{
 
     try{
       //adding to appwrite
-      
+      const promise = storage.createFile(
+        '67840116003980398e18',
+        `project-${pcount+1}`,
+        projectImg
+      );
+      promise.then(function (res){
+        console.log("Image added to bucket");
+      }, function (error){
+          console.log(error);
+      })
 
       //adding to firebase
         await setDoc(doc(db, "projects",`project-${pcount+1}`),{
