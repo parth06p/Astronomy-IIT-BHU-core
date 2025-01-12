@@ -22,6 +22,22 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
+const adminRef = doc(db, "admin", "users");
+const admin = await getDoc(adminRef);
+const users = admin.data();
+
+
+auth.onAuthStateChanged((user)=>{
+  if(user){
+    let allowed = 0;
+    for(let ukey in users){
+      if(user.uid == users[ukey]){allowed = 1;}
+    }
+    if(!allowed){window.alert("Error 401 : unauthorized"); window.location.href='../index.html';}
+  }
+  else{window.alert("Error 401 : unauthorized"); window.location.href='../index.html';}
+});
+
 setPersistence(auth, browserSessionPersistence)
   .then(() => {
     // Persistence set successfully
