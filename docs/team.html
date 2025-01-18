@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Club Projects</title>
+    <link rel="stylesheet" href = "./static/form-styles.css">
+    <link rel="stylesheet" href="./static/project-form-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Averia+Sans+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@14.0.1"></script>
+</head>
+<body>
+    <div class="container">
+        <form id="team-form" class="form-syl">
+            <span>🤖 Great ! A new project for our Club</span>
+            <label for="team-form"></label>
+            <input type="text" id="team-form" class="blog-inp-syl" placeholder="Enter team name" required>
+            <label for="team-des"></label>
+            <textarea type="text" id="team-des" class="blog-inp-syl" placeholder="designation" required></textarea>
+            <label for="year"></label>
+            <input type="text" id="img-first" class="blog-inp-syl" placeholder="image first" required>
+            <label for="img-first"></label>
+            <input type="file" id="img-first" accept="image/*" required>
+
+            <div id="btn-blog" class="event-btn">
+                <button type="submit" id="team-save">Save</button>
+                <button type="cancel" id="team-cancel">cancel</button>
+            </div>
+        </form>
+        
+    </div>
+</body>
+<script src="./static/project.js" type="module"></script>
+</html>
